@@ -5,3 +5,8 @@ declare interface Room extends PrismaRoom {
     master: User
     players: User[]
 }
+
+declare interface RoomForm {
+    name: string
+    master_id: string
+}

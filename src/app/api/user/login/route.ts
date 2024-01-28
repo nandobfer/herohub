@@ -1,4 +1,4 @@
-import { SignupForm } from "@/types/User"
+import { LoginForm, SignupForm } from "@/types/User"
 import { Prisma, PrismaClient } from "@prisma/client"
 import { uid } from "uid"
 import { include } from "../include"

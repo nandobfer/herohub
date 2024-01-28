@@ -4,8 +4,8 @@ datasource db {
 }
 
 model Room {
-    id         String         @id
-    name       String
+    id          String         @id
+    name        String
 
     master_id   String
     master      User        @relation(fields: [master_id], references: [id])

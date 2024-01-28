@@ -11,6 +11,7 @@ import { useSnackbar } from "burgos-snackbar"
 import { useRouter } from "next/navigation"
 import { LoginFormComponent } from "./LoginForm"
 import { storage } from "@/tools/local_storage"
+import { LoginForm } from "@/types/User"
 
 interface pageProps {}
 

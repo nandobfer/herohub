@@ -6,7 +6,9 @@ import React from "react"
 
 interface UserContextValue {
     user: User | null
-    setUser: (value: User | null) => void
+    setUser: React.Dispatch<React.SetStateAction<User | null>>
+    login_redirect: string | null
+    setLogin_redirect: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 interface UserProviderProps {
@@ -19,6 +21,7 @@ export default UserContext
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null)
+    const [login_redirect, setLogin_redirect] = useState(null)
 
-    return <UserContext.Provider value={{ user: user, setUser: setUser }}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{ user: user, setUser: setUser, login_redirect, setLogin_redirect }}>{children}</UserContext.Provider>
 }

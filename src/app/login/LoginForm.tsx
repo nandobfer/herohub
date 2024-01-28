@@ -10,6 +10,7 @@ import { TextField } from "@/components/TextField"
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 import Link from "next/link"
 import { storage } from "@/tools/local_storage"
+import { LoginForm } from "@/types/User"
 
 interface LoginFormComponentProps {
     username: string | null
@@ -19,7 +20,7 @@ export const LoginFormComponent: React.FC<LoginFormComponentProps> = ({ username
     const router = useRouter()
 
     const { snackbar } = useSnackbar()
-    const { setUser } = useUser()
+    const { setUser, login } = useUser()
 
     const [loading, setLoading] = useState(false)
     const [seePassword, setSeePassword] = useState(false)
@@ -37,18 +38,8 @@ export const LoginFormComponent: React.FC<LoginFormComponentProps> = ({ username
 
             console.log(values)
             setLoading(true)
-            const response = await post("/api/user/login", values)
-            setLoading(false)
-
-            if (response.error) {
-                snackbar({ severity: "error", text: response.error })
-                return
-            }
-
-            setUser(response)
-            router.push("/")
-
-            storage.set("herohub:login", remember ? values : null)
+            const response = await login(values, remember)
+            if (!response) setLoading(false)
         }
     })
 
