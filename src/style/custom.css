@@ -1,0 +1,37 @@
+
+.MuiPaper-root {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.MuiBox-root {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.MuiButton-root, .MuiTab-root {
+    text-transform: none!important;
+}
+
+.MuiChip-label {
+    padding: 0!important;
+}
+
+.files-ui-dropzone-children-container {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 5vw;
+    gap: 5vw;
+}
+
+img {
+    object-fit: contain;
+}
+
+body {
+    text-transform: none;
+}
+
+form {
+    display: contents
+}

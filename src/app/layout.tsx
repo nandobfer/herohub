@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/contexts/themeContext"
+import { Fira_Code } from "next/font/google"
+import "../style/globals.css"
+import "../style/custom.css"
+import { Providers } from "./Providers"
+import { Box } from "@mui/material"
+import { Header } from "@/components/Header"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Fira_Code({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
     title: "Central do Herói",
@@ -18,7 +21,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <ThemeProvider>{children}</ThemeProvider>
+                <Providers>
+                    <Box sx={{ flexDirection: "column" }}>
+                        <Header />
+                        {children}
+                    </Box>
+                </Providers>
             </body>
         </html>
     )

@@ -1,0 +1,20 @@
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Room {
+    id         String         @id
+    name       String
+
+    master_id   String
+    master      User        @relation(fields: [master_id], references: [id])
+    players     User[]      @relation(name: "rooms_players")
+
+}
+
+model User {
+    id              String        @id
+    master_rooms    Room[]
+    rooms           Room[]        @relation(name: "rooms_players")
+}
