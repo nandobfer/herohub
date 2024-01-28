@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Box, Button, CircularProgress } from "@mui/material"
 import { useFormik } from "formik"
 import { Form } from "@/components/Form"
@@ -10,17 +10,20 @@ import { post } from "../api/request"
 import { useSnackbar } from "burgos-snackbar"
 import { useRouter } from "next/navigation"
 import { LoginFormComponent } from "./LoginForm"
+import { storage } from "@/tools/local_storage"
 
 interface pageProps {}
 
 export const Page: React.FC<pageProps> = ({}) => {
+    const remembered_login = storage.get("herohub:login") as LoginForm | undefined
+
     const router = useRouter()
     const { locale: _locale } = useLocale()
     const locale = _locale.login
     const { snackbar } = useSnackbar()
 
     const [loading, setLoading] = useState(false)
-    const [username, setUsername] = useState("")
+    const [username, setUsername] = useState(remembered_login?.login || "")
 
     const initial_formik = useFormik({
         initialValues: { login: "" },

@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Box, Button, CircularProgress, IconButton, Paper } from "@mui/material"
+import React, { useEffect, useState } from "react"
+import { Box, Button, Checkbox, CircularProgress, FormControlLabel, IconButton, Paper } from "@mui/material"
 import { useRouter } from "next/navigation"
 import { useSnackbar } from "burgos-snackbar"
 import { useUser } from "@/hooks/useUser"
@@ -9,6 +9,7 @@ import { Form } from "@/components/Form"
 import { TextField } from "@/components/TextField"
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 import Link from "next/link"
+import { storage } from "@/tools/local_storage"
 
 interface LoginFormComponentProps {
     username: string | null
@@ -22,9 +23,12 @@ export const LoginFormComponent: React.FC<LoginFormComponentProps> = ({ username
 
     const [loading, setLoading] = useState(false)
     const [seePassword, setSeePassword] = useState(false)
+    const [remember, setRemember] = useState(storage.get("herohub:login:remember"))
+
+    const remembered_login = storage.get("herohub:login") as LoginForm | undefined
 
     const formik = useFormik<LoginForm>({
-        initialValues: {
+        initialValues: remembered_login || {
             login: username || "",
             password: ""
         },
@@ -43,8 +47,14 @@ export const LoginFormComponent: React.FC<LoginFormComponentProps> = ({ username
 
             setUser(response)
             router.push("/")
+
+            storage.set("herohub:login", remember ? values : null)
         }
     })
+
+    useEffect(() => {
+        storage.set("herohub:login:remember", remember)
+    }, [remember])
 
     return (
         <Form onSubmit={formik.handleSubmit} sx={{ flexDirection: "column", gap: "5vw", alignItems: "center" }}>
@@ -63,6 +73,7 @@ export const LoginFormComponent: React.FC<LoginFormComponentProps> = ({ username
                     name="password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
+                    autoFocus={!!username}
                     required
                     type={seePassword ? "text" : "password"}
                     InputProps={{
@@ -72,6 +83,11 @@ export const LoginFormComponent: React.FC<LoginFormComponentProps> = ({ username
                             </IconButton>
                         )
                     }}
+                />
+                <FormControlLabel
+                    label="lembrar"
+                    sx={{ color: "secondary.main" }}
+                    control={<Checkbox checked={remember} onChange={(_, checked) => setRemember(checked)} />}
                 />
                 <Button variant="outlined" type="submit">
                     {loading ? <CircularProgress size="1.5rem" /> : "tome"}
