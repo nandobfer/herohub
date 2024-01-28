@@ -27,15 +27,15 @@ export const Header: React.FC<HeaderProps> = ({}) => {
                         <Menu />
                     </IconButton>
 
-                    <IconButton color="secondary">
-                        {user ? (
-                            <UserAvatar size="8vw" />
-                        ) : (
+                    {user ? (
+                        <UserAvatar size="8vw" />
+                    ) : (
+                        <IconButton color="secondary">
                             <Link href={"/login"}>
                                 <Person />
                             </Link>
-                        )}
-                    </IconButton>
+                        </IconButton>
+                    )}
                 </>
             ) : (
                 <LanguageSelector />
